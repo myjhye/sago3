@@ -1,44 +1,11 @@
 import { useState } from 'react';
 import Head from 'next/head';
+import { FaPaperPlane } from 'react-icons/fa';
 
 export default function WonyoungSago() {
     const [question, setQuestion] = useState('');
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
-
-    const bubbleImages = {
-        send: {
-            1: '/text_bullon/send_1.png',
-            2: '/text_bullon/send_2.png',
-            3: '/text_bullon/send_3.png',
-            4: '/text_bullon/send_4.png',
-            5: '/text_bullon/send_5.png'
-        },
-        receive: {
-            1: '/text_bullon/receive_1.png',
-            2: '/text_bullon/receive_2.png',
-            3: '/text_bullon/receive_3.png',
-            4: '/text_bullon/receive_4.png',
-            5: '/text_bullon/receive_5.png',
-        }
-    };
-
-    const getSendBubbleImage = (text) => {
-        const length = text?.length || 0;
-        if (length < 5) return bubbleImages.send[1];
-        if (length < 10) return bubbleImages.send[2];
-        if (length < 20) return bubbleImages.send[3];
-        if (length < 70) return bubbleImages.send[5];
-        return bubbleImages.send[5];
-    };
-
-    const getReceiveBubbleImage = (text) => {
-        const length = text?.length || 0;
-        if (length < 10) return bubbleImages.receive[2];
-        if (length < 30) return bubbleImages.receive[4];
-        if (length < 60) return bubbleImages.receive[5];
-        return bubbleImages.receive[5];
-    };
 
     const handleClick = async () => {
         if (question.trim() === '') return;
@@ -84,13 +51,8 @@ export default function WonyoungSago() {
                             {msg.type === 'receive' && (
                                 <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full mr-2" />
                             )}
-                            <div className="relative max-w-[60%]">
-                                <img 
-                                    src={msg.type === 'send' ? getSendBubbleImage(msg.text) : getReceiveBubbleImage(msg.text)} 
-                                    alt={msg.type} 
-                                    className="w-full h-auto"
-                                />
-                                <p className="absolute top-1/2 left-2 transform -translate-y-1/2 m-0 text-black break-words p-2 w-[calc(100%-20px)]" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                            <div className={`relative flex items-center max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-pink-100' : 'bg-gray-100'}`}>
+                                <p className="ml-2 text-black break-words" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
                                     {msg.text}
                                 </p>
                             </div>
@@ -116,8 +78,8 @@ export default function WonyoungSago() {
                         maxLength={60}
                         className="flex-grow p-2 rounded-l-full border border-gray-300"
                     />
-                    <button className="btn bg-blue-500 text-white rounded-r-full px-4 py-2" onClick={handleClick}>
-                        전송
+                    <button className="btn bg-blue-500 text-white rounded-r-full px-4 py-3 items-center" onClick={handleClick}>
+                        <FaPaperPlane />
                     </button>
                 </div>
                 <div className="text-gray-500 text-sm mb-5">
