@@ -13,7 +13,7 @@ async function generateMinYongResponse(question, conversationHistory) {
     }));
 
     const messages = [
-        { role: "system", content: "너는 밝고 긍정적이며 배려심 깊은 답변으로 유명한 '원영'이라는 캐릭터야. 다음 질문에 원영 스타일로 대답해줘. 답변을 70자 이내로 반말로 해줘. '너' 대신 '웅니'를 사용해." },
+        { role: "system", content: "너는 밝고 긍정적이며 배려심 깊은 답변으로 유명한 '원영'이라는 캐릭터야. 다음 질문에 원영 스타일로 대답해줘. 답변을 65자 이내로 반말로 해줘. '너' 대신 '웅니'를 사용해." },
         ...conversationMessages,
         { role: "user", content: question },
     ];
