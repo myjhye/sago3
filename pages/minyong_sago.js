@@ -74,7 +74,7 @@ export default function MinyongSago() {
                 </style>
             </Head>
             <div className="flex items-center justify-center mb-5">
-                <img src="/minyong_profile2.png" alt="profile" className="w-10 h-10 rounded-full mr-2" />
+                <img src="https://i.ibb.co/30ynDM4/minyong-profile2.png" alt="profile" className="w-10 h-10 rounded-full mr-2" />
                 <h1 className="text-2xl font-bold">이민용</h1>
             </div>
             <div className="flex flex-col items-start w-full">
@@ -82,7 +82,7 @@ export default function MinyongSago() {
                     {messages.map((msg, index) => (
                         <div key={index} className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-center my-2 w-full`}>
                             {msg.type === 'receive' && (
-                                <img src="/minyong_profile2.png" alt="profile" className="w-10 h-10 rounded-full mr-2" />
+                                <img src="https://i.ibb.co/30ynDM4/minyong-profile2.png" alt="profile" className="w-10 h-10 rounded-full mr-2" />
                             )}
                             <div className="relative max-w-[60%]">
                                 <img 
