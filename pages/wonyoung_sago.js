@@ -47,11 +47,17 @@ export default function WonyoungSago() {
             <div className="flex flex-col items-start w-full">
                 <div className="mb-5 w-full">
                     {messages.map((msg, index) => (
-                        <div key={index} className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-center my-2 w-full`}>
+                        <div key={index} className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-start my-2 w-full`}>
                             {msg.type === 'receive' && (
-                                <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full mr-2" />
+                                <div className="flex flex-col items-start mr-2">
+                                    <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full" />
+                                    
+                                </div>
                             )}
-                            <div className={`relative flex items-center max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-pink-100' : 'bg-gray-100'}`}>
+                            <div className={`relative flex items-start max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-pink-100' : 'bg-gray-100'}`}>
+                                {msg.type === 'receive' && (
+                                    <p className="absolute top-[-20px] left-0 text-sm text-gray-600">워녕이🎀</p>
+                                )}
                                 <p className="ml-2 text-black break-words" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
                                     {msg.text}
                                 </p>
@@ -75,15 +81,11 @@ export default function WonyoungSago() {
                         onChange={(e) => setQuestion(e.target.value)}
                         onKeyPress={handleKeyPress}
                         placeholder="원영이와 대화하기"
-                        maxLength={60}
                         className="flex-grow p-2 rounded-l-full border border-gray-300"
                     />
                     <button className="btn bg-blue-500 text-white rounded-r-full px-4 py-3 items-center" onClick={handleClick}>
                         <FaPaperPlane />
                     </button>
-                </div>
-                <div className="text-gray-500 text-sm mb-5">
-                    {question.length}/60
                 </div>
             </div>
         </div>
