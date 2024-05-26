@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { FaPaperPlane } from 'react-icons/fa';
 
@@ -6,12 +6,33 @@ export default function MinyongSago() {
     const [question, setQuestion] = useState('');
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [lastMessageDate, setLastMessageDate] = useState('');
+
+    useEffect(() => {
+        const currentDate = new Date().toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        setLastMessageDate(currentDate);
+    }, []);
 
     const handleClick = async () => {
         if (question.trim() === '') return;
 
+        const currentTime = new Date().toLocaleTimeString('ko-KR', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        });
+        const currentDate = new Date().toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
         setLoading(true);
-        setMessages([...messages, { type: 'send', text: question }]);
+        setMessages([...messages, { type: 'send', text: question, time: currentTime, date: currentDate }]);
         setQuestion('');
 
         const res = await fetch(`/api/minyong_answer`, {
@@ -23,7 +44,7 @@ export default function MinyongSago() {
         });
 
         const json = await res.json();
-        setMessages((prevMessages) => [...prevMessages, { type: 'receive', text: json.response }]);
+        setMessages((prevMessages) => [...prevMessages, { type: 'receive', text: json.response, time: currentTime, date: currentDate }]);
         setLoading(false);
     };
 
@@ -34,27 +55,48 @@ export default function MinyongSago() {
     };
 
     return (
-        <div className="text-center p-5">
+        <div className="text-center p-5 bg-gray-100 min-h-screen">
             <Head>
                 <style>
                     {`@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');`}
                 </style>
             </Head>
-            <div className="flex items-center justify-center mb-5">
-                <img src="https://i.ibb.co/30ynDM4/minyong-profile2.png" alt="profile" className="w-10 h-10 rounded-full mr-2" />
-                <h1 className="text-2xl font-bold">이민용</h1>
+            <div className="fixed top-0 left-0 right-0 bg-white p-2 shadow-md z-10">
+                <div className="flex items-center justify-center mt-2 mb-2">
+                    <img src="https://i.ibb.co/30ynDM4/minyong-profile2.png" alt="profile" className="w-10 h-10 rounded-full mr-2" />
+                    <h1 className="text-2xl font-bold">이민용</h1>
+                </div>
             </div>
-            <div className="flex flex-col items-start w-full">
+            <div className="flex flex-col items-start w-full pt-24">
                 <div className="mb-5 w-full">
                     {messages.map((msg, index) => (
-                        <div key={index} className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-center my-2 w-full`}>
-                            {msg.type === 'receive' && (
-                                <img src="https://i.ibb.co/30ynDM4/minyong-profile2.png" alt="profile" className="w-10 h-10 rounded-full mr-2" />
+                        <div key={index} className="mb-8">
+                            {(index === 0 || msg.date !== messages[index - 1].date) && (
+                                <div className="text-center w-full">
+                                    <hr />
+                                    <p className="text-gray-500 mt-2">{msg.date}</p>
+                                </div>
                             )}
-                            <div className={`relative flex items-center max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-blue-100' : 'bg-gray-100'}`}>
-                                <p className="ml-2 text-black break-words" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
-                                    {msg.text}
-                                </p>
+                            <div className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-start my-2 w-full`}>
+                                {msg.type === 'receive' && (
+                                    <div className="flex flex-col items-start mr-2">
+                                        <img src="https://i.ibb.co/30ynDM4/minyong-profile2.png" alt="profile" className="w-10 h-10 rounded-full" style={{ alignSelf: 'flex-start', marginTop: '-10px' }} />
+                                    </div>
+                                )}
+                                {msg.type === 'send' && (
+                                    <span className="self-end text-xs text-gray-500 mr-2">{msg.time}</span>
+                                )}
+                                <div className={`relative flex flex-col items-start max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-blue-200' : 'bg-white'}`}>
+                                    {msg.type === 'receive' && (
+                                        <p className="absolute top-[-23px] left-0 text-sm text-gray-600">이민용</p>
+                                    )}
+                                    <p className="ml-2 text-black break-words mb-2 text-left" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                                        {msg.text}
+                                    </p>
+                                </div>
+                                {msg.type === 'receive' && (
+                                    <span className="self-end text-xs text-gray-500 ml-2">{msg.time}</span>
+                                )}
                             </div>
                         </div>
                     ))}
@@ -68,22 +110,18 @@ export default function MinyongSago() {
                         </div>
                     )}
                 </div>
-                <div className="flex w-full items-center mb-2">
+                <div className="fixed bottom-0 left-0 right-0 bg-white p-2 border-t border-gray-300 flex w-full items-center z-10">
                     <input
                         type="text"
                         value={question}
                         onChange={(e) => setQuestion(e.target.value)}
                         onKeyPress={handleKeyPress}
                         placeholder="민용이와 대화하기"
-                        maxLength={60}
                         className="flex-grow p-2 rounded-l-full border border-gray-300"
                     />
                     <button className="btn bg-blue-500 text-white rounded-r-full px-4 py-3 items-center" onClick={handleClick}>
                         <FaPaperPlane />
                     </button>
-                </div>
-                <div className="text-gray-500 text-sm mb-5">
-                    {question.length}/60
                 </div>
             </div>
         </div>
