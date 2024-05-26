@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { FaPaperPlane } from 'react-icons/fa';
 
@@ -55,20 +55,22 @@ export default function WonyoungSago() {
     };
 
     return (
-        <div className="text-center p-5">
+        <div className="text-center p-5 bg-gray-100 min-h-screen">
             <Head>
                 <style>
                     {`@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');`}
                 </style>
             </Head>
-            <div className="flex items-center justify-center mb-5">
-                <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full mr-2" />
-                <h1 className="text-2xl font-bold">워녕이🎀</h1>
+            <div className="fixed top-0 left-0 right-0 bg-white p-4 shadow-md z-10">
+                <div className="flex items-center justify-center mb-5">
+                    <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full mr-2" />
+                    <h1 className="text-2xl font-bold">워녕이🎀</h1>
+                </div>
             </div>
-            <div className="flex flex-col items-start w-full">
+            <div className="flex flex-col items-start w-full pt-24"> {/* Adjusted padding-top to make space for the fixed header */}
                 <div className="mb-5 w-full">
                     {messages.map((msg, index) => (
-                        <div key={index} className="mb-8 mt-8"> {/* 말풍선 사이 간격 추가 */}
+                        <div key={index} className="mb-8"> {/* 말풍선 사이 간격 추가 */}
                             {(index === 0 || msg.date !== messages[index - 1].date) && (
                                 <div className="text-center w-full mb-2">
                                     <hr />
@@ -85,7 +87,7 @@ export default function WonyoungSago() {
                                 {msg.type === 'send' && (
                                     <span className="self-end text-xs text-gray-500 mr-2">{msg.time}</span>
                                 )}
-                                <div className={`relative flex flex-col items-start max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-pink-100' : 'bg-gray-100'}`}>
+                                <div className={`relative flex flex-col items-start max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-pink-200' : 'bg-white-200'}`}>
                                     {msg.type === 'receive' && (
                                         <p className="absolute top-[-20px] left-0 text-sm text-gray-600">워녕이🎀</p>
                                     )}
@@ -118,7 +120,7 @@ export default function WonyoungSago() {
                         placeholder="원영이와 대화하기"
                         className="flex-grow p-2 rounded-l-full border border-gray-300"
                     />
-                    <button className="btn bg-blue-500 text-white rounded-r-full px-4 py-3 items-center" onClick={handleClick}>
+                    <button className="btn bg-pink-500 text-white rounded-r-full px-4 py-3 items-center" onClick={handleClick}>
                         <FaPaperPlane />
                     </button>
                 </div>
