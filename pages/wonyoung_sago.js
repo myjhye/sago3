@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { FaPaperPlane } from 'react-icons/fa';
 
@@ -6,12 +6,33 @@ export default function WonyoungSago() {
     const [question, setQuestion] = useState('');
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [lastMessageDate, setLastMessageDate] = useState('');
+
+    useEffect(() => {
+        const currentDate = new Date().toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        setLastMessageDate(currentDate);
+    }, []);
 
     const handleClick = async () => {
         if (question.trim() === '') return;
 
+        const currentTime = new Date().toLocaleTimeString('ko-KR', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        });
+        const currentDate = new Date().toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
         setLoading(true);
-        setMessages([...messages, { type: 'send', text: question }]);
+        setMessages([...messages, { type: 'send', text: question, time: currentTime, date: currentDate }]);
         setQuestion('');
 
         const res = await fetch(`/api/wonyoung_answer`, {
@@ -23,7 +44,7 @@ export default function WonyoungSago() {
         });
 
         const json = await res.json();
-        setMessages((prevMessages) => [...prevMessages, { type: 'receive', text: json.response }]);
+        setMessages((prevMessages) => [...prevMessages, { type: 'receive', text: json.response, time: currentTime, date: currentDate }]);
         setLoading(false);
     };
 
@@ -47,20 +68,34 @@ export default function WonyoungSago() {
             <div className="flex flex-col items-start w-full">
                 <div className="mb-5 w-full">
                     {messages.map((msg, index) => (
-                        <div key={index} className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-start my-2 w-full`}>
-                            {msg.type === 'receive' && (
-                                <div className="flex flex-col items-start mr-2">
-                                    <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full" />
-                                    
+                        <div key={index}>
+                            {(index === 0 || msg.date !== messages[index - 1].date) && (
+                                <div className="text-center w-full mb-2">
+                                    <p className="text-gray-500">{msg.date}</p>
                                 </div>
                             )}
-                            <div className={`relative flex items-start max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-pink-100' : 'bg-gray-100'}`}>
+                            
+                            <div className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-start my-2 w-full`}>
                                 {msg.type === 'receive' && (
-                                    <p className="absolute top-[-20px] left-0 text-sm text-gray-600">워녕이🎀</p>
+                                    <div className="flex flex-col items-start mr-2">
+                                        <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full" />
+                                    </div>
                                 )}
-                                <p className="ml-2 text-black break-words" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
-                                    {msg.text}
-                                </p>
+                                {msg.type === 'send' && (
+                                    <span className="text-xs text-gray-500 mt-5 mr-2">{msg.time}</span>
+                                )}
+                                <div className={`relative flex items-start max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-pink-100' : 'bg-gray-100'}`}>
+                                    {msg.type === 'receive' && (
+                                        <p className="absolute top-[-20px] left-0 text-sm text-gray-600">워녕이🎀</p>
+                                    )}
+                                    <p className="ml-2 text-black break-words" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                                        {msg.text}
+                                    </p>
+                                    
+                                </div>
+                                {msg.type === 'receive' && (
+                                    <span className="text-xs text-gray-500 mt-5 ml-2">{msg.time}</span>
+                                )}
                             </div>
                         </div>
                     ))}
