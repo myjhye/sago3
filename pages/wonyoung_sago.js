@@ -87,9 +87,9 @@ export default function WonyoungSago() {
                                 {msg.type === 'send' && (
                                     <span className="self-end text-xs text-gray-500 mr-2">{msg.time}</span>
                                 )}
-                                <div className={`relative flex flex-col items-start max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-pink-200' : 'bg-white-200'}`}>
+                                <div className={`relative flex flex-col items-start max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-pink-200' : 'bg-white'}`}>
                                     {msg.type === 'receive' && (
-                                        <p className="absolute top-[-20px] left-0 text-sm text-gray-600">워녕이🎀</p>
+                                        <p className="absolute top-[-23px] left-0 text-sm text-gray-600">워녕이🎀</p>
                                     )}
                                     <p className="ml-2 text-black break-words mb-2 text-left" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
                                         {msg.text}
