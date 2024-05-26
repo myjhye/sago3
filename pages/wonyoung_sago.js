@@ -17,6 +17,7 @@ export default function WonyoungSago() {
         setLastMessageDate(currentDate);
     }, []);
 
+
     const handleClick = async () => {
         if (question.trim() === '') return;
 
@@ -46,6 +47,7 @@ export default function WonyoungSago() {
         const json = await res.json();
         setMessages((prevMessages) => [...prevMessages, { type: 'receive', text: json.response, time: currentTime, date: currentDate }]);
         setLoading(false);
+        
     };
 
     const handleKeyPress = (event) => {
@@ -111,7 +113,7 @@ export default function WonyoungSago() {
                         </div>
                     )}
                 </div>
-                <div className="flex w-full items-center mb-2">
+                <div className="fixed bottom-0 left-0 right-0 bg-white p-2 border-t border-gray-300 flex w-full items-center z-10">
                     <input
                         type="text"
                         value={question}
