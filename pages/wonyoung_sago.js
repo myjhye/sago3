@@ -68,7 +68,7 @@ export default function WonyoungSago() {
             <div className="flex flex-col items-start w-full">
                 <div className="mb-5 w-full">
                     {messages.map((msg, index) => (
-                        <div key={index} className="mb-8"> {/* 말풍선 사이 간격 추가 */}
+                        <div key={index} className="mb-8 mt-8"> {/* 말풍선 사이 간격 추가 */}
                             {(index === 0 || msg.date !== messages[index - 1].date) && (
                                 <div className="text-center w-full mb-2">
                                     <hr />
