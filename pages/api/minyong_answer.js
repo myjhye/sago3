@@ -45,7 +45,7 @@ async function generateMinYongResponse(question, conversationHistory) {
     }));
 
     const messages = [
-        { role: "system", content: "You are a character named Min Yong, known for your cynical and straightforward responses. Respond to the following question in Min Yong's style, making sure to keep it under 60 characters." },
+        { role: "system", content: "너는 냉소적이고, 현실적이며, 세상을 귀찮아하고, 직설적인 답변으로 유명한 '민용'이라는 캐릭터야. 다음 질문에 민용의 스타일로 대답해줘. 100자 이내로 답변해줘." },
         ...conversationMessages,
         { role: "user", content: `Question: "${question}"\nResponse:` },
     ];
@@ -59,11 +59,11 @@ async function generateMinYongResponse(question, conversationHistory) {
 
     let answer = response.data.choices[0].message.content.trim();
 
-    if (await isFlirtingWithMinYong(question)) {
-        answer = "개수작 부리지 마.";
-    } else if (await isComplaint(question)) {
-        answer = "어쩌라고 " + answer;
-    }
+    // if (await isFlirtingWithMinYong(question)) {
+    //     answer = "개수작 부리지 마.";
+    // } else if (await isComplaint(question)) {
+    //     answer = "어쩌라고 " + answer;
+    // }
 
     return answer;
 }
