@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import { FaPaperPlane } from 'react-icons/fa';
 
@@ -89,7 +89,7 @@ export default function WonyoungSago() {
                                     {msg.type === 'receive' && (
                                         <p className="absolute top-[-20px] left-0 text-sm text-gray-600">워녕이🎀</p>
                                     )}
-                                    <p className="ml-2 text-black break-words mb-2" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
+                                    <p className="ml-2 text-black break-words mb-2 text-left" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
                                         {msg.text}
                                     </p>
                                 </div>
