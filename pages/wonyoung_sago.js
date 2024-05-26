@@ -61,8 +61,8 @@ export default function WonyoungSago() {
                     {`@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');`}
                 </style>
             </Head>
-            <div className="fixed top-0 left-0 right-0 bg-white p-4 shadow-md z-10">
-                <div className="flex items-center justify-center mb-5">
+            <div className="fixed top-0 left-0 right-0 bg-white p-2 shadow-md z-10">
+                <div className="flex items-center justify-center mt-2 mb-2">
                     <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full mr-2" />
                     <h1 className="text-2xl font-bold">워녕이🎀</h1>
                 </div>
@@ -72,7 +72,7 @@ export default function WonyoungSago() {
                     {messages.map((msg, index) => (
                         <div key={index} className="mb-8"> {/* 말풍선 사이 간격 추가 */}
                             {(index === 0 || msg.date !== messages[index - 1].date) && (
-                                <div className="text-center w-full mb-2">
+                                <div className="text-center w-full">
                                     <hr />
                                     <p className="text-gray-500 mt-2">{msg.date}</p>
                                 </div>
