@@ -68,7 +68,7 @@ export default function WonyoungSago() {
             <div className="flex flex-col items-start w-full">
                 <div className="mb-5 w-full">
                     {messages.map((msg, index) => (
-                        <div key={index} className="mb-4"> {/* 말풍선 사이 간격 추가 */}
+                        <div key={index} className="mb-8"> {/* 말풍선 사이 간격 추가 */}
                             {(index === 0 || msg.date !== messages[index - 1].date) && (
                                 <div className="text-center w-full mb-2">
                                     <hr />
@@ -76,10 +76,10 @@ export default function WonyoungSago() {
                                 </div>
                             )}
                             
-                            <div className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-end my-2 w-full`}>
+                            <div className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-start my-2 w-full`}>
                                 {msg.type === 'receive' && (
                                     <div className="flex flex-col items-start mr-2">
-                                        <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full" />
+                                        <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full" style={{ alignSelf: 'flex-start', marginTop: '-10px' }} />
                                     </div>
                                 )}
                                 {msg.type === 'send' && (
