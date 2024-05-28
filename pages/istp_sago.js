@@ -89,7 +89,7 @@ export default function MinyongSago() {
                                 {msg.type === 'send' && (
                                     <span className="self-end text-xs text-gray-500 mr-2">{msg.time}</span>
                                 )}
-                                <div className={`relative flex flex-col items-start max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-green-200' : 'bg-white'}`}>
+                                <div className={`relative flex flex-col items-start max-w-[60%] rounded-lg p-2 ${msg.type === 'send' ? 'bg-yellow-200' : 'bg-white'}`}>
                                     {msg.type === 'receive' && (
                                         <p className="absolute top-[-23px] left-0 text-sm text-gray-600">
                                             ISTP
@@ -110,7 +110,7 @@ export default function MinyongSago() {
                     {loading && (
                         <div className="flex justify-end my-2 w-full">
                             <div className="relative max-w-[60%]">
-                                <div className="bg-gray-200 rounded-full px-4 py-2 inline-block">
+                                <div className="bg-gray-200 rounded-full px-4 py-2 inline-ock">
                                     <p className="m-0 text-gray-500" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
                                         Sending...
                                     </p>
@@ -128,7 +128,7 @@ export default function MinyongSago() {
                         placeholder="잇팁과 대화하기"
                         className="flex-grow p-2 rounded-l-full border border-gray-300"
                     />
-                    <button className="btn bg-green-500 text-white rounded-r-full px-4 py-3 items-center" onClick={handleClick}>
+                    <button className="btn bg-yellow-500 text-white rounded-r-full px-4 py-3 items-center" onClick={handleClick}>
                         <FaPaperPlane />
                     </button>
                 </div>
