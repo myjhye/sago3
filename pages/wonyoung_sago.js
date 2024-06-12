@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import { FaPaperPlane } from 'react-icons/fa';
 
@@ -7,6 +7,7 @@ export default function WonyoungSago() {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [lastMessageDate, setLastMessageDate] = useState('');
+    const messageEndRef = useRef(null);
 
     useEffect(() => {
         const currentDate = new Date().toLocaleDateString('ko-KR', {
@@ -17,6 +18,12 @@ export default function WonyoungSago() {
         setLastMessageDate(currentDate);
     }, []);
 
+    useEffect(() => {
+        // 새로운 메시지가 추가될 때 최신 메시지로 스크롤
+        if (messageEndRef.current) {
+            messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [messages, loading]);
 
     const handleClick = async () => {
         if (question.trim() === '') return;
@@ -33,7 +40,15 @@ export default function WonyoungSago() {
         });
 
         setLoading(true);
-        setMessages([...messages, { type: 'send', text: question, time: currentTime, date: currentDate }]);
+        setMessages([
+            ...messages,
+            {
+                type: 'send',
+                text: question,
+                time: currentTime,
+                date: currentDate
+            }
+        ]);
         setQuestion('');
 
         const res = await fetch(`/api/wonyoung_answer`, {
@@ -45,9 +60,11 @@ export default function WonyoungSago() {
         });
 
         const json = await res.json();
-        setMessages((prevMessages) => [...prevMessages, { type: 'receive', text: json.response, time: currentTime, date: currentDate }]);
+        setMessages((prevMessages) => [
+            ...prevMessages,
+            { type: 'receive', text: json.response, time: currentTime, date: currentDate }
+        ]);
         setLoading(false);
-        
     };
 
     const handleKeyPress = (event) => {
@@ -69,17 +86,17 @@ export default function WonyoungSago() {
                     <h1 className="text-2xl font-bold">워녕이🎀</h1>
                 </div>
             </div>
-            <div className="flex flex-col items-start w-full pt-24"> {/* Adjusted padding-top to make space for the fixed header */}
-                <div className="mb-5 w-full">
+            <div className="flex flex-col items-start w-full pt-24">
+                <div className="mb-5 w-full overflow-auto" style={{ maxHeight: 'calc(100vh - 150px)' }}>
                     {messages.map((msg, index) => (
-                        <div key={index} className="mb-8"> {/* 말풍선 사이 간격 추가 */}
+                        <div key={index} className="mb-8">
                             {(index === 0 || msg.date !== messages[index - 1].date) && (
                                 <div className="text-center w-full">
                                     <hr />
                                     <p className="text-gray-500 mt-2">{msg.date}</p>
                                 </div>
                             )}
-                            
+
                             <div className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-start my-2 w-full`}>
                                 {msg.type === 'receive' && (
                                     <div className="flex flex-col items-start mr-2">
@@ -104,14 +121,20 @@ export default function WonyoungSago() {
                         </div>
                     ))}
                     {loading && (
-                        <div className="flex justify-end my-2 w-full">
+                        <div className="flex items-start my-2 w-full">
+                            <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full mr-2" />
                             <div className="relative max-w-[60%]">
-                                <div className="bg-gray-200 rounded-full px-4 py-2 inline-block">
-                                    <p className="m-0 text-gray-500" style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>Sending...</p>
+                                <div className="bg-gray-200 rounded-lg px-4 py-2 inline-block">
+                                    <div className="flex space-x-1">
+                                        <div className="bg-gray-400 w-2 h-2 rounded-full animate-pulse"></div>
+                                        <div className="bg-gray-400 w-2 h-2 rounded-full animate-pulse delay-75"></div>
+                                        <div className="bg-gray-400 w-2 h-2 rounded-full animate-pulse delay-150"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     )}
+                    <div ref={messageEndRef}></div>
                 </div>
                 <div className="fixed bottom-0 left-0 right-0 bg-white p-2 border-t border-gray-300 flex w-full items-center z-10">
                     <input
@@ -128,5 +151,5 @@ export default function WonyoungSago() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
