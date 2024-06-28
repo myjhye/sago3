@@ -68,7 +68,8 @@ export default function WonyoungSago() {
     };
 
     const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
             handleClick();
         }
     };
@@ -137,13 +138,18 @@ export default function WonyoungSago() {
                     <div ref={messageEndRef}></div>
                 </div>
                 <div className="fixed bottom-0 left-0 right-0 bg-white p-2 border-t border-gray-300 flex w-full items-center z-10">
-                    <input
-                        type="text"
+                    <textarea
                         value={question}
                         onChange={(e) => setQuestion(e.target.value)}
                         onKeyPress={handleKeyPress}
                         placeholder="원영이와 대화하기"
-                        className="flex-grow p-2 rounded-l-full border border-gray-300"
+                        className="flex-grow p-2 rounded-l-full border border-gray-300 resize-none"
+                        rows={1}
+                        style={{ overflow: 'hidden' }}
+                        onInput={(e) => {
+                            e.target.style.height = 'auto';
+                            e.target.style.height = `${e.target.scrollHeight}px`;
+                        }}
                     />
                     <button className="btn bg-pink-500 text-white rounded-r-full px-4 py-3 items-center" onClick={handleClick}>
                         <FaPaperPlane />
