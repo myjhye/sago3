@@ -123,7 +123,7 @@ export default function WonyoungSago() {
                     ))}
                     {loading && (
                         <div className="flex items-start my-2 w-full">
-                            <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full mr-2" />
+                            <img src="https://i.ibb.co/rtf0wqM/2024-07-14-1-19-08.png" alt="profile" className="w-10 h-10 rounded-full mr-2" />
                             <div className="relative max-w-[60%]">
                                 <div className="bg-gray-200 rounded-lg px-4 py-2 inline-block">
                                     <div className="flex space-x-1">
