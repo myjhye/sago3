@@ -83,7 +83,7 @@ export default function WonyoungSago() {
             </Head>
             <div className="fixed top-0 left-0 right-0 bg-white p-2 shadow-md z-10">
                 <div className="flex items-center justify-center mt-2 mb-2">
-                    <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full mr-2" />
+                    <img src="https://i.ibb.co/rtf0wqM/2024-07-14-1-19-08.png" alt="profile" className="w-10 h-10 rounded-full mr-2" />
                     <h1 className="text-2xl font-bold">워녕이🎀</h1>
                 </div>
             </div>
@@ -101,7 +101,7 @@ export default function WonyoungSago() {
                             <div className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-start my-2 w-full`}>
                                 {msg.type === 'receive' && (
                                     <div className="flex flex-col items-start mr-2">
-                                        <img src="https://i.ibb.co/QJL4hr9/Fsn-Q5-J8a-EAEi-EUA.jpg" alt="profile" className="w-10 h-10 rounded-full" style={{ alignSelf: 'flex-start', marginTop: '-10px' }} />
+                                        <img src="https://i.ibb.co/rtf0wqM/2024-07-14-1-19-08.png" alt="profile" className="w-10 h-10 rounded-full" style={{ alignSelf: 'flex-start', marginTop: '-10px' }} />
                                     </div>
                                 )}
                                 {msg.type === 'send' && (
