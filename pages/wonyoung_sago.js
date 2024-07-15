@@ -7,6 +7,7 @@ export default function WonyoungSago() {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [lastMessageDate, setLastMessageDate] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
     const messageEndRef = useRef(null);
 
     useEffect(() => {
@@ -74,6 +75,14 @@ export default function WonyoungSago() {
         }
     };
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div className="text-center p-5 bg-gray-100 min-h-screen">
             <Head>
@@ -83,7 +92,12 @@ export default function WonyoungSago() {
             </Head>
             <div className="fixed top-0 left-0 right-0 bg-white p-2 shadow-md z-10">
                 <div className="flex items-center justify-center mt-2 mb-2">
-                    <img src="https://i.ibb.co/rtf0wqM/2024-07-14-1-19-08.png" alt="profile" className="w-10 h-10 rounded-full mr-2" />
+                    <img
+                        src="https://i.ibb.co/rtf0wqM/2024-07-14-1-19-08.png"
+                        alt="profile"
+                        className="w-10 h-10 rounded-full mr-2 cursor-pointer"
+                        onClick={openModal}
+                    />
                     <h1 className="text-2xl font-bold">워녕이🎀</h1>
                 </div>
             </div>
@@ -101,7 +115,13 @@ export default function WonyoungSago() {
                             <div className={`flex ${msg.type === 'send' ? 'justify-end' : 'justify-start'} items-start my-2 w-full`}>
                                 {msg.type === 'receive' && (
                                     <div className="flex flex-col items-start mr-2">
-                                        <img src="https://i.ibb.co/rtf0wqM/2024-07-14-1-19-08.png" alt="profile" className="w-10 h-10 rounded-full" style={{ alignSelf: 'flex-start', marginTop: '-10px' }} />
+                                        <img
+                                            src="https://i.ibb.co/rtf0wqM/2024-07-14-1-19-08.png"
+                                            alt="profile"
+                                            className="w-10 h-10 rounded-full cursor-pointer"
+                                            style={{ alignSelf: 'flex-start', marginTop: '-10px' }}
+                                            onClick={openModal}
+                                        />
                                     </div>
                                 )}
                                 {msg.type === 'send' && (
@@ -146,16 +166,29 @@ export default function WonyoungSago() {
                         className="flex-grow p-2 rounded-l-full border border-gray-300 resize-none"
                         rows={1}
                         style={{ overflow: 'hidden' }}
-                        onInput={(e) => {
-                            e.target.style.height = 'auto';
-                            e.target.style.height = `${e.target.scrollHeight}px`;
-                        }}
                     />
                     <button className="btn bg-pink-500 text-white rounded-r-full px-4 py-3 items-center" onClick={handleClick}>
                         <FaPaperPlane />
                     </button>
                 </div>
             </div>
+            {isModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                    <div className="bg-white p-5 rounded-lg relative">
+                        <button 
+                            className="absolute top-2 right-2 text-black" 
+                            onClick={closeModal}
+                        >
+                            &times;
+                        </button>
+                        <img
+                            src="https://i.ibb.co/rtf0wqM/2024-07-14-1-19-08.png"
+                            alt="profile"
+                            className="w-full h-full rounded-lg"
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
