@@ -170,7 +170,7 @@ export default function WonyoungSago() {
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
                     <div className="bg-white p-5 rounded-lg relative">
                         <button 
-                            className="absolute top-2 right-2 text-black" 
+                            className="absolute top-2 right-2 text-black text-3xl p-2" // 크기와 패딩 조정
                             onClick={closeModal}
                         >
                             &times;
