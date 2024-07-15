@@ -92,12 +92,6 @@ export default function WonyoungSago() {
             </Head>
             <div className="fixed top-0 left-0 right-0 bg-white p-2 shadow-md z-10">
                 <div className="flex items-center justify-center mt-2 mb-2">
-                    <img
-                        src="https://i.ibb.co/rtf0wqM/2024-07-14-1-19-08.png"
-                        alt="profile"
-                        className="w-10 h-10 rounded-full mr-2 cursor-pointer"
-                        onClick={openModal}
-                    />
                     <h1 className="text-2xl font-bold">워녕이🎀</h1>
                 </div>
             </div>
